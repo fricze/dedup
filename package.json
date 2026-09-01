@@ -1,5 +1,5 @@
 {
-  "name": "dedup",
+  "name": "@yonki/dedup",
   "version": "0.1.0",
   "description": "Find duplicate/similar TypeScript type declarations across a codebase",
   "keywords": [
@@ -19,19 +19,26 @@
   "license": "MIT",
   "author": "Andrzej Fricze",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/cli.js",
   "bin": {
     "dedup": "dist/cli.js",
     "dedup-mcp": "dist/mcp-server.js"
   },
+  "files": [
+    "dist"
+  ],
   "directories": {
     "example": "examples"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build",
     "start": "node dist/cli.js",
     "dev": "tsx src/cli.ts",
     "mcp": "node dist/mcp-server.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
