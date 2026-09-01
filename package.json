@@ -21,7 +21,8 @@
   "type": "module",
   "main": "index.js",
   "bin": {
-    "dedup": "dist/cli.js"
+    "dedup": "dist/cli.js",
+    "dedup-mcp": "dist/mcp-server.js"
   },
   "directories": {
     "example": "examples"
@@ -29,10 +30,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/cli.js",
-    "dev": "tsx src/cli.ts"
+    "dev": "tsx src/cli.ts",
+    "mcp": "node dist/mcp-server.js"
   },
   "dependencies": {
-    "ts-morph": "^24.0.0"
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "ts-morph": "^24.0.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

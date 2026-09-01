@@ -41,3 +41,144 @@ Nested object-literal fields (e.g. `address: { street, city }`) are compared rec
 ```
 node dist/cli.js examples
 ```
+
+## MCP server
+
+Exposes a `find_duplicates` tool over stdio so an LLM can pull the results and decide what to do with them.
+
+```
+npm run build
+```
+
+Tool input: `{ dirs: string[], threshold?: number }`. Returns `exactDuplicates` and `similarTypes` as JSON — same grouping as the CLI, no formatting/colors, meant for the model to read. Each call re-scans the directories fresh; no session state kept between calls.
+
+Use `/absolute/path/to/dedup/dist/mcp-server.js` (replace with your actual path) in every config below.
+
+### Claude Code
+
+```
+claude mcp add dedup -- node /absolute/path/to/dedup/dist/mcp-server.js
+```
+
+### Claude Desktop
+
+Edit `claude_desktop_config.json` (Settings → Developer → Edit Config):
+
+```json
+{
+  "mcpServers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
+
+### Codex CLI
+
+```
+codex mcp add dedup -- node /absolute/path/to/dedup/dist/mcp-server.js
+```
+
+Or in `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.dedup]
+command = "node"
+args = ["/absolute/path/to/dedup/dist/mcp-server.js"]
+```
+
+### Cursor
+
+`.cursor/mcp.json` (project) or `~/.cursor/mcp.json` (global):
+
+```json
+{
+  "mcpServers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
+
+### Windsurf
+
+`~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
+
+### Cline / Roo Code / Kilo Code
+
+All three read the same shape, via each extension's "MCP Servers" panel → "Configure MCP Servers" (opens `cline_mcp_settings.json` / `roo_mcp_settings.json` / `kilocode_mcp_settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
+
+### Gemini CLI
+
+```
+gemini mcp add dedup node /absolute/path/to/dedup/dist/mcp-server.js
+```
+
+Or in `~/.gemini/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
+
+### VS Code (Copilot agent mode)
+
+`.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
+
+### Amazon Q Developer CLI
+
+`~/.aws/amazonq/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "dedup": {
+      "command": "node",
+      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+    }
+  }
+}
+```
