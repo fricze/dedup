@@ -1,5 +1,7 @@
 # dedup
 
+<img src="logo.png" alt="dedup" width="300">
+
 Find duplicate and similar TypeScript type/interface declarations across a codebase — candidates for deduplication.
 
 ## Install
