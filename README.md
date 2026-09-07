@@ -4,17 +4,10 @@
 
 Find duplicate and similar TypeScript type/interface declarations across a codebase — candidates for deduplication.
 
-## Install
-
-```
-npm install
-npm run build
-```
-
 ## Usage
 
 ```
-node dist/cli.js <dir> [<dir> ...] [--threshold 0.7]
+npx @yonki/dedup <dir> [<dir> ...] [--threshold 0.7]
 ```
 
 - `<dir>` — one or more directories to scan (`.ts`/`.tsx`, recursive)
@@ -23,8 +16,8 @@ node dist/cli.js <dir> [<dir> ...] [--threshold 0.7]
 Example:
 
 ```
-node dist/cli.js src --threshold 0.6
-node dist/cli.js src packages/shared -t 0.8
+npx @yonki/dedup src --threshold 0.6
+npx @yonki/dedup src packages/shared -t 0.8
 ```
 
 ## Output
@@ -39,25 +32,21 @@ Nested object-literal fields (e.g. `address: { street, city }`) are compared rec
 ## Try it
 
 ```
-node dist/cli.js examples
+npx @yonki/dedup examples
 ```
 
 ## MCP server
 
 Exposes a `find_duplicates` tool over stdio so an LLM can pull the results and decide what to do with them.
 
-```
-npm run build
-```
-
 Tool input: `{ dirs: string[], threshold?: number }`. Returns `exactDuplicates` and `similarTypes` as JSON — same grouping as the CLI, no formatting/colors, meant for the model to read. Each call re-scans the directories fresh; no session state kept between calls.
 
-Use `/absolute/path/to/dedup/dist/mcp-server.js` (replace with your actual path) in every config below.
+Use `npx -p @yonki/dedup dedup-mcp` in every config below.
 
 ### Claude Code
 
 ```
-claude mcp add dedup -- node /absolute/path/to/dedup/dist/mcp-server.js
+claude mcp add dedup -- npx -p @yonki/dedup dedup-mcp
 ```
 
 ### Claude Desktop
@@ -68,8 +57,8 @@ Edit `claude_desktop_config.json` (Settings → Developer → Edit Config):
 {
   "mcpServers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
@@ -78,15 +67,15 @@ Edit `claude_desktop_config.json` (Settings → Developer → Edit Config):
 ### Codex CLI
 
 ```
-codex mcp add dedup -- node /absolute/path/to/dedup/dist/mcp-server.js
+codex mcp add dedup -- npx -p @yonki/dedup dedup-mcp
 ```
 
 Or in `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.dedup]
-command = "node"
-args = ["/absolute/path/to/dedup/dist/mcp-server.js"]
+command = "npx"
+args = ["-p", "@yonki/dedup", "dedup-mcp"]
 ```
 
 ### Cursor
@@ -97,8 +86,8 @@ args = ["/absolute/path/to/dedup/dist/mcp-server.js"]
 {
   "mcpServers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
@@ -112,8 +101,8 @@ args = ["/absolute/path/to/dedup/dist/mcp-server.js"]
 {
   "mcpServers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
@@ -127,8 +116,8 @@ All three read the same shape, via each extension's "MCP Servers" panel → "Con
 {
   "mcpServers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
@@ -137,7 +126,7 @@ All three read the same shape, via each extension's "MCP Servers" panel → "Con
 ### Gemini CLI
 
 ```
-gemini mcp add dedup node /absolute/path/to/dedup/dist/mcp-server.js
+gemini mcp add dedup npx -p @yonki/dedup dedup-mcp
 ```
 
 Or in `~/.gemini/settings.json`:
@@ -146,8 +135,8 @@ Or in `~/.gemini/settings.json`:
 {
   "mcpServers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
@@ -161,8 +150,8 @@ Or in `~/.gemini/settings.json`:
 {
   "servers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
@@ -176,8 +165,8 @@ Or in `~/.gemini/settings.json`:
 {
   "mcpServers": {
     "dedup": {
-      "command": "node",
-      "args": ["/absolute/path/to/dedup/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-p", "@yonki/dedup", "dedup-mcp"]
     }
   }
 }
