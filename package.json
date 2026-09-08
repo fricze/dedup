@@ -1,6 +1,6 @@
 {
   "name": "@yonki/dedup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find duplicate/similar TypeScript type declarations across a codebase",
   "keywords": [
     "deduplication",
